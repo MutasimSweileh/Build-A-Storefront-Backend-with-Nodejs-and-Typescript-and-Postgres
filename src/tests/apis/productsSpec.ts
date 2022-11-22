@@ -10,6 +10,13 @@ describe('Product API Tests', () => {
   beforeAll(async () => {
     auth = await getAuth(request);
   });
+  it('should create new product {invalid args}', async () => {
+    const res = await request
+      .post('/products/')
+      .set(...auth)
+      .send({});
+    expect(res.status).toBe(500);
+  });
   it('should create new product', async () => {
     //console.log('token', auth);
     const res = await request

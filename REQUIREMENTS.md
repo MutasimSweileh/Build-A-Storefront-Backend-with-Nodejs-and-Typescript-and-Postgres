@@ -170,6 +170,8 @@ Response Body: [{firstname: string, lastname: string}]
 ## Database Schema
 
 ```postgresql
+
+
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(300) NOT NULL,

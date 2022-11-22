@@ -30,16 +30,17 @@ describe('User API Tests', () => {
         lastname: 'user',
         password: 'secret'
     };
-    it('should create new user', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('should create new user and verify token', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield request
             .post('/users/')
             .set(...auth)
             .send(user);
         expect(res.status).toBe(200);
         expect(res.body.data.username).toBe(user.username);
+        expect(res.body.data.token).toBeTruthy();
         id = res.body.data.id;
     }));
-    it('should be able to login', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('should be able to login and verify token', () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield request
             .post('/login/')
             .send({ username: user.username, password: user.password });
@@ -57,6 +58,14 @@ describe('User API Tests', () => {
         const res = yield request.get(`/users/${id}`).set(...auth);
         expect(res.status).toBe(200);
         expect(res.body.data.id).toBe(id);
+    }));
+    it('should be unable to update user info {invalid args}', () => __awaiter(void 0, void 0, void 0, function* () {
+        user.firstname = 'super test';
+        const res = yield request
+            .put(`/users/${id}`)
+            .set(...auth)
+            .send({});
+        expect(res.status).toBe(500);
     }));
     it('should update user info', () => __awaiter(void 0, void 0, void 0, function* () {
         user.firstname = 'super test';

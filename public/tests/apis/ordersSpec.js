@@ -28,7 +28,12 @@ describe('Order API Tests', () => {
         user_id: '1'
     };
     const product = { name: 'test', price: 20, category: 'test' };
-    it('should create new product for the order', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('should be unable to create a new product without token', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield request.post('/products/').send(product);
+        expect(res.status).toBe(401);
+        expect(res.body.data).toBeFalsy();
+    }));
+    it('should create a new product for the order with token', () => __awaiter(void 0, void 0, void 0, function* () {
         //console.log('token', auth);
         const res = yield request
             .post('/products/')

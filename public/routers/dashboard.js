@@ -13,17 +13,32 @@ const express_1 = require("express");
 const dashboard_1 = require("../services/dashboard");
 const router = (0, express_1.Router)();
 const dashboard = new dashboard_1.Dashboard();
-const productsInOrders = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield dashboard.productsInOrders();
-    res.json(products);
+const productsInOrders = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield dashboard.productsInOrders();
+        res.json(products);
+    }
+    catch (err) {
+        return next(err);
+    }
 });
-const usersWithOrders = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield dashboard.usersWithOrders();
-    res.json(users);
+const usersWithOrders = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield dashboard.usersWithOrders();
+        res.json(users);
+    }
+    catch (err) {
+        return next(err);
+    }
 });
-const fiveMostExpensive = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield dashboard.fiveMostExpensive();
-    res.json(users);
+const fiveMostExpensive = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield dashboard.fiveMostExpensive();
+        res.json(users);
+    }
+    catch (err) {
+        return next(err);
+    }
 });
 router.get('/products_in_orders', productsInOrders);
 router.get('/users-with-orders', usersWithOrders);

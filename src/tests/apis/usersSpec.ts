@@ -20,17 +20,18 @@ describe('User API Tests', () => {
     password: 'secret'
   };
 
-  it('should create new user', async () => {
+  it('should create new user and verify token', async () => {
     const res = await request
       .post('/users/')
       .set(...auth)
       .send(user);
     expect(res.status).toBe(200);
     expect(res.body.data.username).toBe(user.username);
+    expect(res.body.data.token).toBeTruthy();
     id = res.body.data.id;
   });
 
-  it('should be able to login', async () => {
+  it('should be able to login and verify token', async () => {
     const res = await request
       .post('/login/')
       .send({ username: user.username, password: user.password });
@@ -54,7 +55,14 @@ describe('User API Tests', () => {
     expect(res.status).toBe(200);
     expect(res.body.data.id).toBe(id);
   });
-
+  it('should be unable to update user info {invalid args}', async () => {
+    user.firstname = 'super test';
+    const res = await request
+      .put(`/users/${id}`)
+      .set(...auth)
+      .send({});
+    expect(res.status).toBe(500);
+  });
   it('should update user info', async () => {
     user.firstname = 'super test';
     const res = await request

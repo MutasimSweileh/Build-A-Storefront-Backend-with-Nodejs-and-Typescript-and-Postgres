@@ -37,9 +37,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
       password: req.body.password
     };
     const newUser = await user.create(User);
+    const token = jwt.sign({ u: newUser }, config.tokenSecret as unknown as string);
     res.json({
       status: 'success',
-      data: newUser
+      data: { ...newUser, token }
     });
   } catch (err) {
     next(err);

@@ -52,9 +52,10 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             password: req.body.password
         };
         const newUser = yield user.create(User);
+        const token = jsonwebtoken_1.default.sign({ u: newUser }, config_1.default.tokenSecret);
         res.json({
             status: 'success',
-            data: newUser
+            data: Object.assign(Object.assign({}, newUser), { token })
         });
     }
     catch (err) {

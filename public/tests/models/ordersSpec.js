@@ -43,7 +43,6 @@ describe('Order model tests', () => {
     it('should return order', () => __awaiter(void 0, void 0, void 0, function* () {
         const orderObj = yield order.show(values.id);
         expect(orderObj === null || orderObj === void 0 ? void 0 : orderObj.id).toEqual(values.id);
-        // expect(orderObj?.user_id as number).toEqual(values.user_id);
         expect(orderObj === null || orderObj === void 0 ? void 0 : orderObj.status).toEqual(values.status);
         expect(((orderObj === null || orderObj === void 0 ? void 0 : orderObj.products) || []).length).toEqual(values.products.length);
     }));

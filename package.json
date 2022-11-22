@@ -10,9 +10,12 @@
     "migration:up": "db-migrate up",
     "migration:down": "db-migrate down",
     "format": "prettier --write src/**/*.ts",
-    "test": "SET NODE_ENV=test&SET DEBUG=&db-migrate --env test up && tsc && jasmine-ts && db-migrate --env test reset",
+    "test": "SET NODE_ENV=test&&SET DEBUG=&&npm run pretest && jasmine-ts && npm run posttest",
+    "test:mac": "export NODE_ENV=test&&export DEBUG=&&npm run pretest && jasmine-ts && npm run posttest",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "pretest": "db-migrate --env test up && tsc",
+    "posttest": "db-migrate --env test reset"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

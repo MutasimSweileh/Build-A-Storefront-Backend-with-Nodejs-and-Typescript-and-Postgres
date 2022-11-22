@@ -16,8 +16,12 @@ describe('Order API Tests', () => {
     user_id: '1'
   };
   const product = { name: 'test', price: 20, category: 'test' };
-
-  it('should create new product for the order', async () => {
+  it('should be unable to create a new product without token', async () => {
+    const res = await request.post('/products/').send(product);
+    expect(res.status).toBe(401);
+    expect(res.body.data).toBeFalsy();
+  });
+  it('should create a new product for the order with token', async () => {
     //console.log('token', auth);
     const res = await request
       .post('/products/')

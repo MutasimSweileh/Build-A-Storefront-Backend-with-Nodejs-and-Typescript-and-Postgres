@@ -23,6 +23,13 @@ describe('Product API Tests', () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         auth = yield (0, getAuth_1.getAuth)(request);
     }));
+    it('should create new product {invalid args}', () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield request
+            .post('/products/')
+            .set(...auth)
+            .send({});
+        expect(res.status).toBe(500);
+    }));
     it('should create new product', () => __awaiter(void 0, void 0, void 0, function* () {
         //console.log('token', auth);
         const res = yield request
